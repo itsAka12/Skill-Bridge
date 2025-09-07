@@ -1,0 +1,836 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillBridge - Peer-to-Peer Skill Exchange Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                borderRadius: {
+                    lg: "var(--radius)",
+                    md: "calc(var(--radius) - 2px)",
+                    sm: "calc(var(--radius) - 4px)",
+                },
+                colors: {
+                    background: "var(--background)",
+                    foreground: "var(--foreground)",
+                    card: {
+                        DEFAULT: "var(--card)",
+                        foreground: "var(--card-foreground)",
+                    },
+                    popover: {
+                        DEFAULT: "var(--popover)",
+                        foreground: "var(--popover-foreground)",
+                    },
+                    primary: {
+                        DEFAULT: "var(--primary)",
+                        foreground: "var(--primary-foreground)",
+                    },
+                    secondary: {
+                        DEFAULT: "var(--secondary)",
+                        foreground: "var(--secondary-foreground)",
+                    },
+                    muted: {
+                        DEFAULT: "var(--muted)",
+                        foreground: "var(--muted-foreground)",
+                    },
+                    accent: {
+                        DEFAULT: "var(--accent)",
+                        foreground: "var(--accent-foreground)",
+                    },
+                    destructive: {
+                        DEFAULT: "var(--destructive)",
+                        foreground: "var(--destructive-foreground)",
+                    },
+                    border: "var(--border)",
+                    input: "var(--input)",
+                    ring: "var(--ring)",
+                    chart: {
+                        "1": "var(--chart-1)",
+                        "2": "var(--chart-2)",
+                        "3": "var(--chart-3)",
+                        "4": "var(--chart-4)",
+                        "5": "var(--chart-5)",
+                    }
+                },
+                fontFamily: {
+                    sans: ["var(--font-sans)"],
+                    serif: ["var(--font-serif)"],
+                    mono: ["var(--font-mono)"],
+                }
+            },
+        }
+    };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --radius: 0.5rem;
+            --background: hsl(210 40% 98%);
+            --foreground: hsl(222.2 84% 4.9%);
+            --card: hsl(0 0% 100%);
+            --card-foreground: hsl(222.2 84% 4.9%);
+            --popover: hsl(0 0% 100%);
+            --popover-foreground: hsl(222.2 84% 4.9%);
+            --primary: hsl(214 100% 40%);
+            --primary-foreground: hsl(210 40% 98%);
+            --secondary: hsl(210 40% 96%);
+            --secondary-foreground: hsl(222.2 84% 4.9%);
+            --muted: hsl(210 40% 96%);
+            --muted-foreground: hsl(215.4 16.3% 46.9%);
+            --accent: hsl(158 64% 52%);
+            --accent-foreground: hsl(210 40% 98%);
+            --destructive: hsl(0 84.2% 60.2%);
+            --destructive-foreground: hsl(210 40% 98%);
+            --border: hsl(214.3 31.8% 91.4%);
+            --input: hsl(214.3 31.8% 91.4%);
+            --ring: hsl(214 100% 40%);
+            --font-sans: 'Inter', sans-serif;
+        }
+        
+        body {
+            font-family: var(--font-sans);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background: hsl(222.2 84% 4.9%);
+                --foreground: hsl(210 40% 98%);
+                --card: hsl(222.2 84% 4.9%);
+                --card-foreground: hsl(210 40% 98%);
+                --popover: hsl(222.2 84% 4.9%);
+                --popover-foreground: hsl(210 40% 98%);
+                --primary: hsl(214 100% 50%);
+                --primary-foreground: hsl(222.2 84% 4.9%);
+                --secondary: hsl(217.2 32.6% 17.5%);
+                --secondary-foreground: hsl(210 40% 98%);
+                --muted: hsl(217.2 32.6% 17.5%);
+                --muted-foreground: hsl(215 20.2% 65.1%);
+                --accent: hsl(158 64% 52%);
+                --accent-foreground: hsl(222.2 84% 4.9%);
+                --destructive: hsl(0 62.8% 30.6%);
+                --destructive-foreground: hsl(210 40% 98%);
+                --border: hsl(217.2 32.6% 17.5%);
+                --input: hsl(217.2 32.6% 17.5%);
+                --ring: hsl(214 100% 50%);
+            }
+        }
+    </style>
+</head>
+<body class="bg-background text-foreground font-sans">
+    <!-- Navigation Header -->
+    <!-- @COMPONENT: Navigation [main site navigation] -->
+    <nav class="bg-card border-b border-border sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo and Brand -->
+                <div class="flex items-center space-x-2">
+                    <div class="bg-primary text-primary-foreground p-2 rounded-lg">
+                        <i class="fas fa-handshake text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-foreground">SkillBridge</h1>
+                        <p class="text-xs text-muted-foreground">Connect • Learn • Grow</p>
+                    </div>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-foreground hover:text-primary transition-colors">Browse Skills</a>
+                    <a href="#" class="text-foreground hover:text-primary transition-colors">Find People</a>
+                    <a href="#" class="text-foreground hover:text-primary transition-colors">How It Works</a>
+                    <a href="#" class="text-foreground hover:text-primary transition-colors">Community</a>
+                </div>
+                
+                <!-- User Actions -->
+                <div class="flex items-center space-x-4">
+                    <button class="text-foreground hover:text-primary transition-colors">
+                        <i class="fas fa-bell text-lg"></i>
+                    </button>
+                    <!-- Mock user avatar -->
+                    <div class="w-8 h-8 bg-accent rounded-full flex items-center justify-center" data-mock="true">
+                        <span class="text-accent-foreground text-sm font-medium">JS</span>
+                    </div>
+                    <button class="bg-primary text-primary-foreground px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors">
+                        Offer Skill
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: Navigation -->
+
+    <!-- Hero Section -->
+    <!-- @COMPONENT: HeroSection [main landing section] -->
+    <section class="bg-gradient-to-br from-primary/10 via-background to-accent/10 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-foreground mb-6">
+                    Exchange Skills, <br/>
+                    <span class="text-primary">Build Connections</span>
+                </h1>
+                <p class="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+                    Connect with peers worldwide to share knowledge, learn new skills, and grow together 
+                    through meaningful skill exchanges in a trusted community.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+                    <button class="bg-primary text-primary-foreground px-8 py-3 rounded-lg text-lg font-semibold hover:bg-primary/90 transition-colors w-full sm:w-auto">
+                        Start Learning Today
+                    </button>
+                    <button class="border border-border text-foreground px-8 py-3 rounded-lg text-lg font-semibold hover:bg-muted transition-colors w-full sm:w-auto">
+                        Share Your Skills
+                    </button>
+                </div>
+                
+                <!-- Trust Indicators -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div>
+                        <div class="text-2xl font-bold text-primary">12.5K+</div>
+                        <div class="text-muted-foreground">Active Users</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-primary">850+</div>
+                        <div class="text-muted-foreground">Skills Available</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-primary">98%</div>
+                        <div class="text-muted-foreground">Success Rate</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-primary">45+</div>
+                        <div class="text-muted-foreground">Countries</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: HeroSection -->
+
+    <!-- Search and Filter Section -->
+    <!-- @COMPONENT: SearchSection [skill search interface] -->
+    <section class="py-16 bg-card">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-foreground mb-4">Find the Perfect Skill Match</h2>
+                <p class="text-muted-foreground">Discover amazing skills or find someone to learn from</p>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="max-w-4xl mx-auto mb-8">
+                <div class="relative">
+                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground"></i>
+                    <input 
+                        type="text" 
+                        placeholder="Search for skills like 'Web Development', 'Guitar', 'Photography'..."
+                        class="w-full pl-12 pr-4 py-4 border border-border rounded-xl text-lg focus:ring-2 focus:ring-ring focus:border-transparent bg-background"
+                        data-mock="true"
+                    />
+                    <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary text-primary-foreground px-6 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors">
+                        Search
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Filter Chips -->
+            <div class="flex flex-wrap justify-center gap-3 mb-8">
+                <button class="bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium">All Categories</button>
+                <button class="bg-muted text-muted-foreground px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Technology</button>
+                <button class="bg-muted text-muted-foreground px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Design</button>
+                <button class="bg-muted text-muted-foreground px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Languages</button>
+                <button class="bg-muted text-muted-foreground px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Music</button>
+                <button class="bg-muted text-muted-foreground px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Business</button>
+                <button class="bg-muted text-muted-foreground px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors">Arts & Crafts</button>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: SearchSection -->
+
+    <!-- Featured Skills Section -->
+    <!-- @COMPONENT: FeaturedSkills [skill listings grid] -->
+    <section class="py-16 bg-background">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between mb-12">
+                <div>
+                    <h2 class="text-3xl font-bold text-foreground mb-2">Featured Skills</h2>
+                    <p class="text-muted-foreground">Popular skills from our community</p>
+                </div>
+                <button class="text-primary hover:text-primary/80 font-medium">View All →</button>
+            </div>
+            
+            <!-- Skills Grid -->
+            <!-- @MAP: skills.map(skill => ( -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Skill Card 1 -->
+                <div class="bg-card border border-border rounded-xl p-6 hover:shadow-lg transition-shadow" data-mock="true">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="bg-primary/10 text-primary p-3 rounded-lg">
+                            <i class="fas fa-code text-xl"></i>
+                        </div>
+                        <span class="bg-accent/10 text-accent px-2 py-1 rounded-full text-xs font-medium">Available</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-foreground mb-2">Full-Stack Web Development</h3>
+                    <p class="text-muted-foreground text-sm mb-4">Learn React, Node.js, MongoDB, and modern web development practices</p>
+                    
+                    <!-- User Info -->
+                    <div class="flex items-center mb-4">
+                        <!-- Professional headshot of a young woman with glasses in modern office setting -->
+                        <img src="https://pixabay.com/get/g0a2be56490f8e58bdf53f68a650682db8a2303ce59228d182f7dd09cf6ac98d896c44da7052887c483855281106698e130344e66ead6e56d52cf74da6efe9ca2_1280.jpg" alt="Sarah Chen profile" class="w-10 h-10 rounded-full mr-3 object-cover" />
+                        <div>
+                            <div class="font-medium text-foreground" data-bind="user.name">Sarah Chen</div>
+                            <div class="text-muted-foreground text-sm">Senior Developer</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Rating and Reviews -->
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <div class="flex text-yellow-400 mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-sm text-muted-foreground">5.0 (24 reviews)</span>
+                        </div>
+                        <span class="text-sm font-medium text-primary">3 sessions/week</span>
+                    </div>
+                    
+                    <!-- Exchange Interest -->
+                    <div class="bg-muted p-3 rounded-lg mb-4">
+                        <div class="text-xs text-muted-foreground mb-1">Wants to learn:</div>
+                        <div class="text-sm font-medium text-foreground">UX/UI Design, Digital Marketing</div>
+                    </div>
+                    
+                    <button class="w-full bg-primary text-primary-foreground py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors">
+                        Connect & Exchange
+                    </button>
+                </div>
+                
+                <!-- Skill Card 2 -->
+                <div class="bg-card border border-border rounded-xl p-6 hover:shadow-lg transition-shadow" data-mock="true">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="bg-accent/10 text-accent p-3 rounded-lg">
+                            <i class="fas fa-paint-brush text-xl"></i>
+                        </div>
+                        <span class="bg-accent/10 text-accent px-2 py-1 rounded-full text-xs font-medium">Available</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-foreground mb-2">UI/UX Design Mastery</h3>
+                    <p class="text-muted-foreground text-sm mb-4">Master Figma, Adobe Creative Suite, and design thinking principles</p>
+                    
+                    <!-- User Info -->
+                    <div class="flex items-center mb-4">
+                        <!-- Professional headshot of a creative man with beard in modern studio -->
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=60&h=60" alt="Marcus Rivera profile" class="w-10 h-10 rounded-full mr-3 object-cover" />
+                        <div>
+                            <div class="font-medium text-foreground" data-bind="user.name">Marcus Rivera</div>
+                            <div class="text-muted-foreground text-sm">Design Director</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Rating and Reviews -->
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <div class="flex text-yellow-400 mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-sm text-muted-foreground">4.9 (31 reviews)</span>
+                        </div>
+                        <span class="text-sm font-medium text-primary">2 sessions/week</span>
+                    </div>
+                    
+                    <!-- Exchange Interest -->
+                    <div class="bg-muted p-3 rounded-lg mb-4">
+                        <div class="text-xs text-muted-foreground mb-1">Wants to learn:</div>
+                        <div class="text-sm font-medium text-foreground">Python Programming, Data Analysis</div>
+                    </div>
+                    
+                    <button class="w-full bg-primary text-primary-foreground py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors">
+                        Connect & Exchange
+                    </button>
+                </div>
+                
+                <!-- Skill Card 3 -->
+                <div class="bg-card border border-border rounded-xl p-6 hover:shadow-lg transition-shadow" data-mock="true">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="bg-purple-100 text-purple-600 p-3 rounded-lg">
+                            <i class="fas fa-language text-xl"></i>
+                        </div>
+                        <span class="bg-accent/10 text-accent px-2 py-1 rounded-full text-xs font-medium">Available</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-foreground mb-2">Spanish Language Fluency</h3>
+                    <p class="text-muted-foreground text-sm mb-4">From beginner to conversational level with native speaker guidance</p>
+                    
+                    <!-- User Info -->
+                    <div class="flex items-center mb-4">
+                        <!-- Professional headshot of a warm latina woman in casual business attire -->
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=60&h=60" alt="Isabella Martinez profile" class="w-10 h-10 rounded-full mr-3 object-cover" />
+                        <div>
+                            <div class="font-medium text-foreground" data-bind="user.name">Isabella Martinez</div>
+                            <div class="text-muted-foreground text-sm">Language Teacher</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Rating and Reviews -->
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <div class="flex text-yellow-400 mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-sm text-muted-foreground">4.8 (18 reviews)</span>
+                        </div>
+                        <span class="text-sm font-medium text-primary">4 sessions/week</span>
+                    </div>
+                    
+                    <!-- Exchange Interest -->
+                    <div class="bg-muted p-3 rounded-lg mb-4">
+                        <div class="text-xs text-muted-foreground mb-1">Wants to learn:</div>
+                        <div class="text-sm font-medium text-foreground">Photography, Video Editing</div>
+                    </div>
+                    
+                    <button class="w-full bg-primary text-primary-foreground py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors">
+                        Connect & Exchange
+                    </button>
+                </div>
+            </div>
+            <!-- @END_MAP )) -->
+        </div>
+    </section>
+    <!-- @END_COMPONENT: FeaturedSkills -->
+
+    <!-- User Dashboard Preview -->
+    <!-- @COMPONENT: DashboardPreview [user dashboard interface] -->
+    <section class="py-16 bg-card">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-foreground mb-4">Your Personal Learning Hub</h2>
+                <p class="text-muted-foreground">Track your progress, manage connections, and discover new opportunities</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- User Profile Card -->
+                <div class="bg-background border border-border rounded-xl p-6">
+                    <div class="text-center mb-6">
+                        <!-- Professional headshot of a diverse young professional smiling -->
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&h=150" alt="John Smith profile" class="w-20 h-20 rounded-full mx-auto mb-4 object-cover" data-mock="true" />
+                        <h3 class="text-lg font-semibold text-foreground" data-bind="currentUser.name">John Smith</h3>
+                        <p class="text-muted-foreground">Product Manager</p>
+                        <div class="flex justify-center items-center mt-2">
+                            <div class="flex text-yellow-400 mr-2">
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="fas fa-star text-sm"></i>
+                                <i class="fas fa-star text-sm"></i>
+                            </div>
+                            <span class="text-sm text-muted-foreground">4.9</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Skills Offered -->
+                    <div class="mb-6">
+                        <h4 class="font-medium text-foreground mb-3">Skills I Offer</h4>
+                        <div class="space-y-2">
+                            <div class="bg-muted p-2 rounded-lg">
+                                <div class="text-sm font-medium text-foreground">Product Strategy</div>
+                                <div class="text-xs text-muted-foreground">15 successful exchanges</div>
+                            </div>
+                            <div class="bg-muted p-2 rounded-lg">
+                                <div class="text-sm font-medium text-foreground">Agile Methodology</div>
+                                <div class="text-xs text-muted-foreground">8 successful exchanges</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Learning Goals -->
+                    <div>
+                        <h4 class="font-medium text-foreground mb-3">Want to Learn</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-accent/10 text-accent px-2 py-1 rounded-full text-xs">React.js</span>
+                            <span class="bg-accent/10 text-accent px-2 py-1 rounded-full text-xs">Machine Learning</span>
+                            <span class="bg-accent/10 text-accent px-2 py-1 rounded-full text-xs">Guitar</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Activity Feed -->
+                <div class="bg-background border border-border rounded-xl p-6">
+                    <h3 class="font-semibold text-foreground mb-6">Recent Activity</h3>
+                    <div class="space-y-4">
+                        <!-- Activity Item 1 -->
+                        <div class="flex items-start space-x-3" data-mock="true">
+                            <div class="bg-accent text-accent-foreground p-2 rounded-full">
+                                <i class="fas fa-handshake text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm text-foreground">New skill exchange request from <span class="font-medium">Emma Wilson</span></p>
+                                <p class="text-xs text-muted-foreground">2 hours ago</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Activity Item 2 -->
+                        <div class="flex items-start space-x-3" data-mock="true">
+                            <div class="bg-primary text-primary-foreground p-2 rounded-full">
+                                <i class="fas fa-star text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm text-foreground">Received 5-star review from <span class="font-medium">David Kim</span></p>
+                                <p class="text-xs text-muted-foreground">1 day ago</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Activity Item 3 -->
+                        <div class="flex items-start space-x-3" data-mock="true">
+                            <div class="bg-purple-100 text-purple-600 p-2 rounded-full">
+                                <i class="fas fa-graduation-cap text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm text-foreground">Completed learning milestone in <span class="font-medium">Web Development</span></p>
+                                <p class="text-xs text-muted-foreground">3 days ago</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Activity Item 4 -->
+                        <div class="flex items-start space-x-3" data-mock="true">
+                            <div class="bg-accent text-accent-foreground p-2 rounded-full">
+                                <i class="fas fa-users text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm text-foreground">Joined community group <span class="font-medium">Frontend Developers</span></p>
+                                <p class="text-xs text-muted-foreground">1 week ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Stats -->
+                <div class="bg-background border border-border rounded-xl p-6">
+                    <h3 class="font-semibold text-foreground mb-6">Your Impact</h3>
+                    <div class="space-y-6">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-primary mb-1">23</div>
+                            <div class="text-sm text-muted-foreground">Skills Exchanges</div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-accent mb-1">4.9</div>
+                            <div class="text-sm text-muted-foreground">Average Rating</div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-purple-600 mb-1">127</div>
+                            <div class="text-sm text-muted-foreground">Learning Hours</div>
+                        </div>
+                        
+                        <!-- Progress Bars -->
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-foreground">React.js Progress</span>
+                                    <span class="text-muted-foreground">75%</span>
+                                </div>
+                                <div class="w-full bg-muted rounded-full h-2">
+                                    <div class="bg-primary h-2 rounded-full w-3/4"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-foreground">Spanish Level</span>
+                                    <span class="text-muted-foreground">60%</span>
+                                </div>
+                                <div class="w-full bg-muted rounded-full h-2">
+                                    <div class="bg-accent h-2 rounded-full w-3/5"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: DashboardPreview -->
+
+    <!-- How It Works Section -->
+    <!-- @COMPONENT: HowItWorks [process explanation] -->
+    <section class="py-16 bg-background">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-foreground mb-4">How SkillBridge Works</h2>
+                <p class="text-muted-foreground max-w-2xl mx-auto">
+                    Join thousands of learners and teachers in our trusted community. Exchange skills, 
+                    build relationships, and grow together.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="text-center">
+                    <div class="bg-primary/10 text-primary w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-user-plus text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-foreground mb-4">1. Create Your Profile</h3>
+                    <p class="text-muted-foreground">
+                        Sign up and showcase your skills, experience, and what you'd like to learn. 
+                        Build trust with verified credentials and peer reviews.
+                    </p>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="text-center">
+                    <div class="bg-accent/10 text-accent w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-search text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-foreground mb-4">2. Find Your Match</h3>
+                    <p class="text-muted-foreground">
+                        Browse skills, connect with like-minded peers, and find the perfect exchange partner. 
+                        Use filters to find exactly what you're looking for.
+                    </p>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="text-center">
+                    <div class="bg-purple-100 text-purple-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-handshake text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-foreground mb-4">3. Start Exchanging</h3>
+                    <p class="text-muted-foreground">
+                        Schedule sessions, track progress, and learn together. Rate your experience 
+                        to help build our trusted community.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: HowItWorks -->
+
+    <!-- Testimonials Section -->
+    <!-- @COMPONENT: Testimonials [user reviews and feedback] -->
+    <section class="py-16 bg-card">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-foreground mb-4">What Our Community Says</h2>
+                <p class="text-muted-foreground">Real stories from real skill exchanges</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-background border border-border rounded-xl p-6" data-mock="true">
+                    <div class="flex text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-foreground mb-6">
+                        "I learned React from Sarah and taught her digital marketing in return. 
+                        The exchange was incredibly valuable and led to a lasting friendship!"
+                    </p>
+                    <div class="flex items-center">
+                        <!-- Professional headshot of a young professional man in modern workspace -->
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=60&h=60" alt="Alex Thompson testimonial" class="w-12 h-12 rounded-full mr-4 object-cover" />
+                        <div>
+                            <div class="font-medium text-foreground">Alex Thompson</div>
+                            <div class="text-muted-foreground text-sm">Marketing Manager</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-background border border-border rounded-xl p-6" data-mock="true">
+                    <div class="flex text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-foreground mb-6">
+                        "SkillBridge connected me with amazing mentors who helped me transition 
+                        into tech. The community is supportive and genuinely invested in your growth."
+                    </p>
+                    <div class="flex items-center">
+                        <!-- Professional headshot of a confident woman in tech environment -->
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=60&h=60" alt="Maria Rodriguez testimonial" class="w-12 h-12 rounded-full mr-4 object-cover" />
+                        <div>
+                            <div class="font-medium text-foreground">Maria Rodriguez</div>
+                            <div class="text-muted-foreground text-sm">Software Developer</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-background border border-border rounded-xl p-6" data-mock="true">
+                    <div class="flex text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-foreground mb-6">
+                        "As a designer, I exchanged UI/UX knowledge for photography skills. 
+                        The platform made it easy to find the perfect match for mutual learning."
+                    </p>
+                    <div class="flex items-center">
+                        <!-- Professional headshot of creative individual in modern design studio -->
+                        <img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=60&h=60" alt="James Wilson testimonial" class="w-12 h-12 rounded-full mr-4 object-cover" />
+                        <div>
+                            <div class="font-medium text-foreground">James Wilson</div>
+                            <div class="text-muted-foreground text-sm">UX Designer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: Testimonials -->
+
+    <!-- CTA Section -->
+    <!-- @COMPONENT: CallToAction [final conversion section] -->
+    <section class="py-20 bg-gradient-to-r from-primary to-accent">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold text-white mb-6">
+                Ready to Start Your Skill Exchange Journey?
+            </h2>
+            <p class="text-xl text-white/90 mb-8">
+                Join thousands of learners and teachers building a more connected, 
+                skilled world through peer-to-peer learning.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button class="bg-white text-primary px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors w-full sm:w-auto">
+                    Get Started for Free
+                </button>
+                <button class="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-primary transition-colors w-full sm:w-auto">
+                    Watch Demo
+                </button>
+            </div>
+            <div class="mt-8 flex items-center justify-center space-x-8 text-white/80">
+                <div class="flex items-center">
+                    <i class="fas fa-check mr-2"></i>
+                    <span>Free to join</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-shield-alt mr-2"></i>
+                    <span>Verified users</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-globe mr-2"></i>
+                    <span>Global community</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: CallToAction -->
+
+    <!-- Footer -->
+    <!-- @COMPONENT: Footer [site footer with links] -->
+    <footer class="bg-card border-t border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Brand Section -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="bg-primary text-primary-foreground p-2 rounded-lg">
+                            <i class="fas fa-handshake text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-foreground">SkillBridge</h3>
+                            <p class="text-xs text-muted-foreground">Connect • Learn • Grow</p>
+                        </div>
+                    </div>
+                    <p class="text-muted-foreground mb-6 max-w-md">
+                        Empowering a global community of learners through peer-to-peer skill exchange. 
+                        Share knowledge, build connections, and grow together.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-muted-foreground hover:text-primary transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-muted-foreground hover:text-primary transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-muted-foreground hover:text-primary transition-colors">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-muted-foreground hover:text-primary transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-semibold text-foreground mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Browse Skills</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Find People</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">How It Works</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Success Stories</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Community</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Support -->
+                <div>
+                    <h4 class="font-semibold text-foreground mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Help Center</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Safety Guidelines</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-border mt-8 pt-8 flex flex-col md:flex-row items-center justify-between">
+                <p class="text-muted-foreground text-sm">
+                    © 2024 SkillBridge. All rights reserved.
+                </p>
+                <div class="flex items-center space-x-4 mt-4 md:mt-0">
+                    <span class="text-muted-foreground text-sm">Built with</span>
+                    <div class="flex items-center space-x-2 text-xs text-muted-foreground">
+                        <span class="bg-muted px-2 py-1 rounded">React</span>
+                        <span class="bg-muted px-2 py-1 rounded">Node.js</span>
+                        <span class="bg-muted px-2 py-1 rounded">MongoDB</span>
+                        <span class="bg-muted px-2 py-1 rounded">AWS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- @END_COMPONENT: Footer -->
+
+    <script>
+        // TODO: Implement business logic, API calls, and state management
+        (function() {
+            // Example of scoped JavaScript for UI interactions
+            const searchInput = document.querySelector('input[type="text"]');
+            const filterButtons = document.querySelectorAll('button');
+            
+            // TODO: Add real search functionality
+            // TODO: Add filter interactions
+            // TODO: Add skill card interactions
+            // TODO: Add dashboard state management
+            // TODO: Add authentication logic
+            // TODO: Add messaging system
+            // TODO: Add review and rating system
+        })();
+    </script>
+</body>
+</html>

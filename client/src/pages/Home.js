@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Hero from '../components/Hero';
+import '../components/Hero';
 
 const Home = () => {
     const featuredSkills = [
@@ -69,6 +70,9 @@ const Home = () => {
             <Hero />
 
             {/* Featured Skills Section */}
+            <div className="bg-red-500 text-white p-4">
+                <h1>hello</h1>
+            </div>
             <section className="py-20 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#6366f1" />
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="SkillBridge - Connect, learn, and grow through peer-to-peer skill exchange. Share your expertise and discover new skills with passionate learners worldwide." />
+    <meta name="keywords" content="skill exchange, peer learning, online education, skill sharing, tutoring, mentoring, learning platform" />
+    <meta name="author" content="SkillBridge Team" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://skillbridge.app/" />
+    <meta property="og:title" content="SkillBridge - Peer-to-Peer Skill Exchange Platform" />
+    <meta property="og:description" content="Connect with skilled professionals and passionate learners. Share your expertise, discover new skills, and grow together through meaningful exchanges." />
+    <meta property="og:image" content="/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://skillbridge.app/" />
+    <meta property="twitter:title" content="SkillBridge - Peer-to-Peer Skill Exchange Platform" />
+    <meta property="twitter:description" content="Connect with skilled professionals and passionate learners. Share your expertise, discover new skills, and grow together." />
+    <meta property="twitter:image" content="/twitter-image.jpg" />
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Preconnect to external domains for better performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://ui-avatars.com">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Favicon variations -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    
+    <title>SkillBridge - Connect, Learn, and Grow Together</title>
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "SkillBridge",
+        "description": "Peer-to-peer skill exchange platform connecting learners and teachers worldwide",
+        "url": "https://skillbridge.app",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Skill sharing and exchange",
+            "User profiles and reviews",
+            "Real-time messaging",
+            "Skill browsing and search",
+            "Peer-to-peer learning"
+        ]
+    }
+    </script>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                50: '#eff6ff',
+                100: '#dbeafe',
+                200: '#bfdbfe',
+                300: '#93c5fd',
+                400: '#60a5fa',
+                500: '#3b82f6',
+                600: '#2563eb',
+                700: '#1d4ed8',
+                800: '#1e40af',
+                900: '#1e3a8a',
+                950: '#172554',
+              },
+              secondary: {
+                50: '#faf5ff',
+                100: '#f3e8ff',
+                200: '#e9d5ff',
+                300: '#d8b4fe',
+                400: '#c084fc',
+                500: '#a855f7',
+                600: '#9333ea',
+                700: '#7c3aed',
+                800: '#6b21a8',
+                900: '#581c87',
+                950: '#3b0764',
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    
+    <!-- Custom CSS for loading screen and other styles -->
+    <style>
+      /* Loading Screen Styles */
+      .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+        animation: gradientShift 8s ease infinite;
+        transition: opacity 0.3s ease;
+      }
+      
+      @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      
+      .loading-spinner {
+        width: 55px;
+        height: 55px;
+        border: 5px solid rgba(255,255,255,0.3);
+        border-top: 5px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 15px;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      .loading-text {
+        color: white;
+        font-size: 18px;
+        font-weight: 500;
+        animation: fadeIn 1s ease;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      /* Global Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      html, body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: linear-gradient(135deg, #f9fafb, #eef2ff);
+        color: #1f2937;
+        line-height: 1.5;
+        min-height: 100%;
+      }
+      
+      #root {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+      
+      /* Focus styles */
+      *:focus {
+        outline: 2px solid #6366f1;
+        outline-offset: 2px;
+      }
+      
+      /* Enhanced Animations */
+      @keyframes blob {
+        0% {
+          transform: translate(0px, 0px) scale(1);
+        }
+        33% {
+          transform: translate(30px, -50px) scale(1.1);
+        }
+        66% {
+          transform: translate(-20px, 20px) scale(0.9);
+        }
+        100% {
+          transform: translate(0px, 0px) scale(1);
+        }
+      }
+      
+      .animate-blob {
+        animation: blob 7s infinite;
+      }
+      
+      .animation-delay-2000 {
+        animation-delay: 2s;
+      }
+      
+      .animation-delay-4000 {
+        animation-delay: 4s;
+      }
+      
+      /* Gradient Text */
+      .gradient-text {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      
+      /* Hover Effects */
+      .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      
+      /* Pulse Animation */
+      @keyframes pulse-glow {
+        0%, 100% {
+          box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 40px rgba(99, 102, 241, 0.8);
+        }
+      }
+      
+      .pulse-glow {
+        animation: pulse-glow 2s infinite;
+      }
+      
+      /* Floating Animation */
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+      
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+      
+      /* Slide In Animations */
+      @keyframes slideInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      
+      @keyframes slideInRight {
+        from {
+          opacity: 0;
+          transform: translateX(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      
+      .animate-slide-in-left {
+        animation: slideInLeft 0.6s ease-out;
+      }
+      
+      .animate-slide-in-right {
+        animation: slideInRight 0.6s ease-out;
+      }
+      
+      /* Scale Animation */
+      @keyframes scaleIn {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      
+      .animate-scale-in {
+        animation: scaleIn 0.5s ease-out;
+      }
+      
+      /* Custom Scrollbar */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f5f9;
+        border-radius: 3px;
+      }
+      
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        border-radius: 3px;
+      }
+      
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      }
+      
+      /* Glass Effect */
+      .glass {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+      
+      /* Gradient Borders */
+      .gradient-border {
+        position: relative;
+        background: white;
+        border-radius: 12px;
+      }
+      
+      .gradient-border::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        padding: 2px;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+        border-radius: inherit;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+      }
+    </style>
+</head>
+<body>
+    <noscript>
+        <div style="text-align: center; padding: 50px; font-family: system-ui, sans-serif;">
+            <h1>SkillBridge</h1>
+            <p>You need to enable JavaScript to run this app.</p>
+            <p>Please enable JavaScript in your browser settings and refresh the page.</p>
+        </div>
+    </noscript>
+    
+    <!-- Loading screen -->
+    <div id="initial-loader" class="loading-container">
+        <div style="text-align: center;">
+            <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #3b82f6, #8b5cf6); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                <span style="color: white; font-weight: bold; font-size: 20px;">SB</span>
+            </div>
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading SkillBridge...</div>
+        </div>
+    </div>
+    
+    <div id="root"></div>
+    
+    <!-- Load React and dependencies via CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/react-router-dom@6.26.0/dist/umd/react-router-dom.development.js"></script>
+    
+    <!-- Load the main React app as browser-compatible code -->
+    <script type="text/babel" src="/simple-app.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        // Hide loading screen when React app loads
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('initial-loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 300);
+            }
+            document.body.classList.remove('loading');
+        });
+        
+        // Service Worker disabled for demo
+        console.log('Service Worker disabled for demo');
+        
+        // Performance monitoring
+        window.addEventListener('load', function() {
+            if ('performance' in window) {
+                const loadTime = performance.now();
+                console.log('Page load time:', Math.round(loadTime), 'ms');
+            }
+        });
+        
+        // Error boundary for uncaught errors
+        window.addEventListener('error', function(e) {
+            console.error('Global error:', e.error);
+            // Could send to error reporting service
+        });
+        
+        // Unhandled promise rejections
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Unhandled promise rejection:', e.reason);
+            // Could send to error reporting service
+        });
+    </script>
+</body>
+</html>

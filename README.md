@@ -70,6 +70,40 @@ Before you begin, ensure you have the following installed:
 - **MongoDB** (local installation or MongoDB Atlas account)
 - **Git**
 
+Project Folder Structure Recap
+
+You already gave me this (thanks!) — here’s the responsibility of each folder:
+
+.local/design_reference/ → likely mockups or JSON design samples (not code critical).
+
+config/ → environment configs like aws.js (for S3), database.js (Mongo connection).
+
+middleware/ → auth middleware (JWT verification).
+
+models/ → MongoDB Mongoose schemas (Message, Review, Skill, User).
+
+public/ → static files served by frontend (index.html, maybe app.js).
+
+routes/ → Express routes (auth, messages, skills, file uploads, users).
+
+src/ → frontend React code (components/, pages/, context/, utils/).
+
+.env.example → sample environment variables.
+
+server.js / simple-server.js → backend entry points.
+
+tailwind.config.js → TailwindCSS setup.
+
+package.json → dependencies for backend/frontend.
+
+PORT: server port (default 5000).
+
+MONGO_URI: MongoDB connection string.
+
+JWT_SECRET: used in middleware/auth.js to sign/verify tokens.
+
+AWS_*: credentials for file upload.
+
 ### Installation
 
 1. **Clone the repository**

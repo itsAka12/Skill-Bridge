@@ -2,10 +2,12 @@ const { useState, useEffect, useContext, createContext } = React;
 const { BrowserRouter, Routes, Route, Navigate, useNavigate, Link, useLocation } = ReactRouterDOM;
 
 // Tailwind CSS (inline for demonstration)
-const tailwindCDN = document.createElement('link');
-tailwindCDN.rel = 'stylesheet';
-tailwindCDN.href = 'https://cdn.tailwindcss.com';
-document.head.appendChild(tailwindCDN);
+// const tailwindCDN = document.createElement('link');
+// tailwindCDN.rel = 'stylesheet';
+// tailwindCDN.href = 'https://cdn.tailwindcss.com';
+// document.head.appendChild(tailwindCDN);
+
+import './index.css';
 
 // Auth Context
 const AuthContext = createContext(null);
