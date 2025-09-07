@@ -4,8 +4,9 @@
   "description": "<div align=\"center\">   <img src=\"https://ui-avatars.com/api/?name=SkillBridge&background=6366f1&color=fff&size=120&rounded=true\" alt=\"SkillBridge Logo\" width=\"120\" height=\"120\">",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject",
     "dev": "nodemon server.js"
   },
   "keywords": [],
